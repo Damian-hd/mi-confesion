@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 192, 203, 0.6);
+            font-size: 20px;
+            animation: floatUp 6s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .confession-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            transform: scale(0);
+            animation: cardAppear 1s ease-out 0.5s forwards;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes cardAppear {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .title {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
+        }
+
+        .message {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #34495e;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2s forwards;
+        }
+
+        .confession-text {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 30px 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.5s forwards;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .signature {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .love-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 3.5s forwards;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+        }
+
+        .love-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(238, 90, 36, 0.6);
+        }
+
+        .love-button:active {
+            transform: scale(0.95);
+        }
+
+        .pulse-heart {
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            color: #e74c3c;
+            margin: 0 10px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .music-note {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: musicFloat 4s infinite ease-in-out;
+        }
+
+        @keyframes musicFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .confession-card {
+                padding: 40px 20px;
+                margin: 20px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .message {
+                font-size: 1.1rem;
+            }
+            
+            .confession-text {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="floating-hearts"></div>
+    
+    <div class="container">
+        <div class="confession-card">
+            <h1 class="title">Para la Persona Más Especial</h1>
+            
+            <p class="message">
+                Cada día que pasa, cada momento que compartimos, 
+                cada sonrisa tuya que ilumina mi mundo...
+                Todo me confirma algo que mi corazón ya sabía.
+            </p>
+            
+            <div class="confession-text">
+                <span class="pulse-heart">💕</span>
+                Te Amo Con Todo Mi Ser
+                <span class="pulse-heart">💕</span>
+            </div>
+            
+            <p class="message">
+                Eres mi razón de sonreír cada mañana,
+                mi paz en cada tormenta,
+                y mi felicidad en cada momento.
+                Quiero caminar contigo hacia el futuro,
+                construir sueños juntos y amarte cada día más.
+            </p>
+            
+            <p class="signature">
+                Con todo mi amor,<br>
+                Tu persona especial ❤️
+            </p>
+            
+            <button class="love-button" onclick="celebrate()">
+                💖 Acepta Mi Amor 💖
+            </button>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        // Crear estrellas
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }, 800);
+        }
+
+        // Crear notas musicales
+        function createMusicNotes() {
+            const notes = ['♪', '♫', '♬', '♩'];
+            
+            setInterval(() => {
+                const note = document.createElement('div');
+                note.className = 'music-note';
+                note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + '%';
+                note.style.top = Math.random() * 100 + '%';
+                note.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(note);
+                
+                setTimeout(() => {
+                    note.remove();
+                }, 4000);
+            }, 2000);
+        }
+
+        // Celebración
+        function celebrate() {
+            const celebration = document.getElementById('celebration');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#fd79a8'];
+            
+            // Crear confetti
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = confetti.style.width;
+                    confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                    celebration.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 50);
+            }
+            
+            // Cambiar el botón
+            const button = document.querySelector('.love-button');
+            button.innerHTML = '💕 ¡Gracias por Amarme! 💕';
+            button.style.background = 'linear-gradient(45deg, #4ecdc4, #44a08d)';
+            
+            // Agregar más corazones
+            setTimeout(() => {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.innerHTML = '❤️';
+                        heart.style.position = 'fixed';
+                        heart.style.left = Math.random() * 100 + '%';
+                        heart.style.top = '100%';
+                        heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                        heart.style.zIndex = '1001';
+                        heart.style.animation = 'floatUp 3s ease-out forwards';
+                        document.body.appendChild(heart);
+                        
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 3000);
+                    }, i * 100);
+                }
+            }, 500);
+        }
+
+        // Inicializar animaciones
+        createStars();
+        createFloatingHearts();
+        createMusicNotes();
+
+        // Agregar efecto de hover al card
+        document.querySelector('.confession-card').addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.transition = 'transform 0.3s ease';
+        });
+
+        document.querySelector('.confession-card').addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>
