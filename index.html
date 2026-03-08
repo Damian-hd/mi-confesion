@@ -1,481 +1,538 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Amor ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Día de la Mujer 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+  :root {
+    --rose: #e8547a;
+    --blush: #f2a7bc;
+    --deep: #1a0a1e;
+    --purple: #6b2f8a;
+    --lilac: #c084d4;
+    --gold: #f0c060;
+    --cream: #fdf0f5;
+  }
 
-        /* Partículas flotantes */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+  html { scroll-behavior: smooth; }
 
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
+  body {
+    background: var(--deep);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
 
-        .particle:nth-child(odd) {
-            animation-delay: -2s;
-        }
+  /* ── CANVAS DE PARTÍCULAS ── */
+  #canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-        .particle:nth-child(even) {
-            animation-delay: -4s;
-        }
+  /* ── SECCIÓN HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    padding: 2rem;
+    text-align: center;
+  }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-100px) rotate(180deg);
-                opacity: 0.5;
-            }
-        }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,47,138,0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 20% 100%, rgba(232,84,122,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 100%, rgba(192,132,212,0.25) 0%, transparent 60%);
+    z-index: -1;
+  }
 
-        /* Contenedor principal */
-        .container {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-        }
+  .date-label {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(0.55rem, 1.8vw, 0.85rem);
+    letter-spacing: 0.35em;
+    color: var(--blush);
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
 
-        /* Título principal */
-        .main-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            color: white;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeInDown 1s ease-out;
-        }
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--cream);
+    text-shadow: 0 0 60px rgba(240,192,96,0.35), 0 2px 4px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
 
-        /* Corazón contenedor */
-        .heart-container {
-            position: relative;
-            width: min(90vw, 350px);
-            height: min(80vw, 300px);
-            margin: 20px auto;
-            animation: fadeInUp 1s ease-out 0.5s both;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+  .main-title em {
+    font-style: italic;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(240,192,96,0.7);
+  }
 
-        .heart-shape {
-            position: relative;
-            width: 300px;
-            height: 260px;
-            margin: 0 auto;
-        }
+  .subtitle {
+    margin-top: 1.2rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--blush);
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+    letter-spacing: 0.05em;
+  }
 
-        .heart-shape:before,
-        .heart-shape:after {
-            content: '';
-            position: absolute;
-            left: 150px;
-            top: 0;
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-            width: 150px;
-            height: 240px;
-            border-radius: 150px 150px 0 0;
-            transform: rotate(-45deg);
-            transform-origin: 0 100%;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
+  .divider {
+    margin: 2.5rem auto;
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lilac), transparent);
+    opacity: 0;
+    animation: fadeIn 1.2s 1.2s forwards;
+  }
 
-        .heart-shape:after {
-            left: 0;
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-        }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0;
+    animation: fadeIn 1s 2.5s forwards;
+    color: var(--blush);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
 
-        /* Texto dentro del corazón */
-        .heart-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -45%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            z-index: 3;
-            width: 200px;
-        }
+  .scroll-hint span { animation: bounce 1.6s infinite; }
 
-        .heart-text .phrase {
-            font-size: clamp(0.7rem, 3vw, 1rem);
-            line-height: 1.2;
-            margin: 2px 0;
-            opacity: 0;
-            animation: textAppear 0.5s ease-out forwards;
-        }
+  /* ── SECCIÓN MENSAJE ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
 
-        .heart-text .phrase:nth-child(1) { animation-delay: 1s; }
-        .heart-text .phrase:nth-child(2) { animation-delay: 1.2s; }
-        .heart-text .phrase:nth-child(3) { animation-delay: 1.4s; }
-        .heart-text .phrase:nth-child(4) { animation-delay: 1.6s; }
-        .heart-text .phrase:nth-child(5) { animation-delay: 1.8s; }
-        .heart-text .phrase:nth-child(6) { animation-delay: 2s; }
+  .card {
+    background: linear-gradient(135deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(107,47,138,0.12) 50%,
+      rgba(232,84,122,0.08) 100%);
+    border: 1px solid rgba(240,192,96,0.2);
+    border-radius: 2px;
+    padding: clamp(2rem, 6vw, 4rem);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 60px rgba(107,47,138,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
 
-        @keyframes textAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .card::before {
+    content: '♡';
+    position: absolute;
+    top: -0.5rem;
+    right: 1.5rem;
+    font-size: 8rem;
+    color: rgba(232,84,122,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
 
-        /* Mensaje final */
-        .final-message {
-            max-width: 600px;
-            color: white;
-            font-size: clamp(1rem, 4vw, 1.3rem);
-            line-height: 1.6;
-            margin-top: 30px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-out 2.5s both;
-        }
+  .card-tag {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+    opacity: 0.85;
+  }
 
-        .highlight {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.4em;
-            color: #ffeb3b;
-            font-weight: 700;
-        }
+  .card-body {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    line-height: 1.95;
+    font-weight: 300;
+    color: rgba(253,240,245,0.9);
+  }
 
-        /* Botones */
-        .buttons {
-            margin-top: 40px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeIn 1s ease-out 3s both;
-        }
+  .card-body strong {
+    color: var(--blush);
+    font-weight: 400;
+    font-style: italic;
+  }
 
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
-        }
+  .card-body .highlight {
+    color: var(--gold);
+    font-weight: 400;
+  }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
+  /* ── SECCIÓN MLBB STATS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.2rem;
+    margin-top: 4rem;
+  }
 
-        /* Corazones flotantes */
-        .floating-hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+  .stat-item {
+    text-align: center;
+    padding: 1.8rem 1rem;
+    border: 1px solid rgba(192,132,212,0.2);
+    background: rgba(107,47,138,0.1);
+    border-radius: 2px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
 
-        .floating-heart {
-            position: absolute;
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.7);
-            animation: floatHeart 8s linear infinite;
-        }
+  .stat-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(240,192,96,0.45);
+  }
 
-        @keyframes floatHeart {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
+  .stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
 
-        /* Animaciones de entrada */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-style: italic;
+    display: block;
+    line-height: 1;
+  }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .stat-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    color: var(--blush);
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    display: block;
+  }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+  /* ── SECCIÓN RAZONES ── */
+  .reasons {
+    margin-top: 5rem;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2rem 5rem;
+  }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 200px;
-                margin: 5px 0;
-            }
-        }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--cream);
+  }
 
-        /* Efecto de pulso en el corazón */
-        .heart-container {
-            animation: fadeInUp 1s ease-out 0.5s both, heartBeat 2s ease-in-out 3s infinite;
-        }
+  .section-title em { color: var(--rose); font-style: italic; }
 
-        @keyframes heartBeat {
-            0%, 50%, 100% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.05);
-            }
-        }
+  .reason-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
 
-        /* Modal styles */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            color: white;
-            font-size: 24px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-        }
+  .reason-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem 1.4rem;
+    border-left: 2px solid rgba(232,84,122,0.4);
+    background: rgba(255,255,255,0.025);
+    border-radius: 0 2px 2px 0;
+    transition: border-color 0.3s, background 0.3s;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.7;
+  }
 
-        .modal-content {
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            position: relative;
-        }
+  .reason-item:hover {
+    border-left-color: var(--rose);
+    background: rgba(232,84,122,0.07);
+  }
 
-        .close-btn {
-            background: white;
-            color: #c44569;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+  .reason-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--rose);
+    opacity: 0.7;
+    min-width: 1.8rem;
+    line-height: 1.3;
+  }
 
-        .close-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-        }
-    </style>
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    border-top: 1px solid rgba(192,132,212,0.12);
+  }
+
+  .footer-heart {
+    font-size: 2.5rem;
+    animation: pulse 2s ease-in-out infinite;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .footer-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blush);
+    opacity: 0.8;
+  }
+
+  .mlbb-badge {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid rgba(240,192,96,0.3);
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(7px); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.18); }
+  }
+</style>
 </head>
 <body>
-    <!-- Partículas flotantes -->
-    <div class="particles" id="particles"></div>
-    
-    <!-- Corazones flotantes -->
-    <div class="floating-hearts" id="floatingHearts"></div>
 
-    <!-- Contenido principal -->
-    <div class="container">
-        <h1 class="main-title">Para Ti, Mi Amor 💕</h1>
-        
-        <div class="heart-container">
-            <div class="heart-shape">
-                <div class="heart-text">
-                    <div class="phrase">Eres una</div>
-                    <div class="phrase">belleza</div>
-                    <div class="phrase">Eres una</div>
-                    <div class="phrase">belleza</div>
-                    <div class="phrase">Eres una</div>
-                    <div class="phrase">belleza</div>
-                </div>
-            </div>
-        </div>
+<canvas id="canvas"></canvas>
 
-        <div class="final-message">
-            Si tuviera que repetir <span class="highlight">Mil veces</span> que eres una belleza, lo haría sin dudar. Pero la verdad es que ni siquiera el <span class="highlight">infinito</span> sería suficiente para expresar lo hermosa que eres, por dentro y por fuera. 
-            <br><br>
-            <span class="highlight">Eres mi definición de belleza perfecta ❤️</span>
-        </div>
+<!-- HERO -->
+<section class="hero">
+  <p class="date-label">8 de Marzo · Día Internacional de la Mujer</p>
 
-        <div class="buttons">
-            <button class="btn" onclick="repeatMessage()">Repetir infinitamente 💕</button>
-        </div>
+  <h1 class="main-title">
+    Para ti,<br>
+    mi <em>compañera</em>
+  </h1>
+
+  <p class="subtitle">
+    La support que siempre estuvo ahí — dentro y fuera del juego
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="scroll-hint">
+    <span>▾</span>
+    <small>descubre más</small>
+  </div>
+</section>
+
+<!-- MENSAJE PRINCIPAL -->
+<div class="section">
+  <div class="card">
+    <p class="card-tag">✦ Un mensaje desde el corazón ✦</p>
+    <p class="card-body">
+      En cada partida supiste exactamente cómo apoyarme —
+      con tus heals en el momento preciso, con tus escudos cuando más los necesitaba,
+      con tu presencia que hacía que todo se sintiera más fácil.<br><br>
+
+      Pero eso que haces en el juego no es más que un reflejo de quién eres en la vida:
+      <strong>una mujer que da sin pedir nada a cambio</strong>,
+      que sostiene, que cuida, que aparece.<br><br>
+
+      Hoy, <span class="highlight">8 de marzo</span>, quiero que sepas que no pasas desapercibida.
+      Que cada momento juntos en la grieta fue un regalo,
+      y que tenerte como compañera de equipo —
+      <strong>y como persona especial en mi vida</strong> — es algo que valoro
+      más de lo que las palabras pueden expresar.<br><br>
+
+      Eres esa clase de mujer que merece ser celebrada todos los días.
+    </p>
+  </div>
+
+  <!-- STATS FICTICIOS PERO EMOTIVOS -->
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-icon">🛡️</span>
+      <span class="stat-value">∞</span>
+      <span class="stat-label">Veces que me cubriste</span>
     </div>
+    <div class="stat-item">
+      <span class="stat-icon">💫</span>
+      <span class="stat-value">100%</span>
+      <span class="stat-label">Win rate de tu sonrisa</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">💜</span>
+      <span class="stat-value">S+</span>
+      <span class="stat-label">Tu rango en mi corazón</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">✨</span>
+      <span class="stat-value">MVP</span>
+      <span class="stat-label">De cada día que compartimos</span>
+    </div>
+  </div>
+</div>
 
-    <script>
-        let currentInterval = null;
+<!-- RAZONES -->
+<div class="reasons">
+  <h2 class="section-title">Por qué eres <em>extraordinaria</em></h2>
+  <ul class="reason-list">
+    <li class="reason-item">
+      <span class="reason-num">01</span>
+      <span>Porque en el juego siempre pensaste en el equipo antes que en ti misma — eso habla de tu generosidad sin límites.</span>
+    </li>
+    <li class="reason-item">
+      <span class="reason-num">02</span>
+      <span>Porque cuando perdíamos nunca te rendiste — me enseñaste que la actitud lo es todo.</span>
+    </li>
+    <li class="reason-item">
+      <span class="reason-num">03</span>
+      <span>Porque compartir partidas contigo convirtió los momentos ordinarios en recuerdos que guardo con cariño.</span>
+    </li>
+    <li class="reason-item">
+      <span class="reason-num">04</span>
+      <span>Porque eres el tipo de persona que hace que todo lo que toca brille un poco más — incluyendo mi día.</span>
+    </li>
+    <li class="reason-item">
+      <span class="reason-num">05</span>
+      <span>Porque ser support no es fácil — requiere empatía, paciencia y corazón. Y tú los tienes de sobra.</span>
+    </li>
+  </ul>
+</div>
 
-        // Crear partículas flotantes
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
+<!-- FOOTER -->
+<footer>
+  <span class="footer-heart">💕</span>
+  <p class="footer-text">
+    "La mejor compañera de equipo que pude tener."
+  </p>
+  <div class="mlbb-badge">Mobile Legends · Support · MVP del corazón</div>
+</footer>
 
-        // Crear corazones flotantes
-        function createFloatingHearts() {
-            const heartsContainer = document.getElementById('floatingHearts');
-            setInterval(() => {
-                if (heartsContainer.children.length < 10) {
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-heart';
-                    heart.innerHTML = '💖';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
-                    heartsContainer.appendChild(heart);
-                    
-                    // Remover corazón después de la animación
-                    setTimeout(() => {
-                        if (heart.parentNode) {
-                            heart.parentNode.removeChild(heart);
-                        }
-                    }, 8000);
-                }
-            }, 2000);
-        }
+<script>
+// ── PARTÍCULAS FLOTANTES ──
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
-        // Función para repetir el mensaje
-        function repeatMessage() {
-            let count = 0;
-            const messages = [
-                "Eres una belleza ✨",
-                "Eres una belleza 💕",
-                "Eres una belleza 🌟",
-                "Eres una belleza 💖",
-                "Eres una belleza 🌹"
-            ];
-            
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            
-            const content = document.createElement('div');
-            content.className = 'modal-content';
-            
-            modal.appendChild(content);
-            document.body.appendChild(modal);
-            
-            currentInterval = setInterval(() => {
-                count++;
-                content.innerHTML = `
-                    <div style="font-family: 'Dancing Script', cursive; font-size: 2rem; margin-bottom: 20px;">
-                        ${messages[count % messages.length]}
-                    </div>
-                    <div style="font-size: 1rem; opacity: 0.8;">
-                        ${count.toLocaleString()} veces y contando... ∞
-                    </div>
-                    <button class="close-btn" onclick="closeModal()">
-                        Cerrar 💕
-                    </button>
-                `;
-            }, 100);
-        }
+let W, H, particles = [];
 
-        // Función para cerrar el modal
-        function closeModal() {
-            if (currentInterval) {
-                clearInterval(currentInterval);
-                currentInterval = null;
-            }
-            const modal = document.querySelector('.modal');
-            if (modal) {
-                modal.remove();
-            }
-        }
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
 
-        // Inicializar efectos
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            createFloatingHearts();
-        });
-    </script>
+const SYMBOLS = ['♡', '✦', '·', '✿', '◦'];
+const COLORS  = ['rgba(232,84,122,', 'rgba(192,132,212,', 'rgba(240,192,96,', 'rgba(242,167,188,'];
+
+function rand(a, b) { return a + Math.random() * (b - a); }
+
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init = false) {
+    this.x    = rand(0, W);
+    this.y    = init ? rand(0, H) : H + 20;
+    this.size = rand(8, 20);
+    this.vy   = -rand(0.25, 0.9);
+    this.vx   = rand(-0.2, 0.2);
+    this.a    = rand(0, Math.PI * 2);
+    this.da   = rand(-0.008, 0.008);
+    this.op   = rand(0.15, 0.55);
+    this.sym  = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    this.col  = COLORS[Math.floor(Math.random() * COLORS.length)];
+  }
+  update() {
+    this.y += this.vy;
+    this.x += this.vx + Math.sin(this.y * 0.015) * 0.3;
+    this.a += this.da;
+    if (this.y < -30) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.a);
+    ctx.globalAlpha = this.op;
+    ctx.fillStyle = this.col + '1)';
+    ctx.font = `${this.size}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(this.sym, 0, 0);
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < 70; i++) particles.push(new Particle());
+
+function loop() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(loop);
+}
+loop();
+
+// ── ANIMACIÓN AL HACER SCROLL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.card, .stat-item, .reason-item, footer').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  observer.observe(el);
+});
+</script>
 </body>
 </html>
